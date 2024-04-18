@@ -278,7 +278,7 @@ function gameLoop() {
     enemies.push(createEnemy('princeton.png'));
     enemies.push(createEnemy('princeton.png'));
     enemies.push(createEnemy('princeton.png'));
-    friends.push(createFriend('slps.png'));
+    friends.push(createFriend('eom.png'));
    }, 10000); // 10 seconds delay
 
 setInterval(function() {
