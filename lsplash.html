@@ -30,10 +30,6 @@
     const playerImg = new Image();
     playerImg.src = 'wall-e.png';
 
-
-
-
-
     // Enemies
     let enemies = [];
     const enemySpeed = 2;
@@ -44,25 +40,25 @@
     const enemyImg = new Image();
     enemyImg.src = 'enemy.png';
 
+    // Cover
+    let coverX = canvas.width / 4;
+    let coverY = canvas.height - 100;
+    let coverWidth = canvas.width / 2;
+    let coverHeight = 50;
+    let coverHits = 0; // 记录掩体被击中的次数
+    let coverColor = "green"; // 控制掩体颜色
+
+    function drawCover() {
+      ctx.fillStyle = coverColor;
+      ctx.fillRect(coverX, coverY, coverWidth, coverHeight);
+    }
+
     // Load player and enemy images
     playerImg.onload = function() {
       enemyImg.onload = function() {
         gameLoop();
       };
     };
-
-
-    function spawnEnemy() {
-      let enemy = {
-        x: Math.random() * (canvas.width - enemySize),
-        y: -enemySize,
-        width: enemySize,
-        height: enemySize,
-        speed: enemySpeed,
-        shootTimer: Math.floor(Math.random() * 100) + 50 // 每个敌人的射击计时器
-      };
-      enemies.push(enemy);
-    }
 
     // Controls
     const keys = {};
@@ -142,27 +138,18 @@
       }
     }
 
-    // Cover
-    const coverX = canvas.width / 4;
-    const coverY = canvas.height - 100;
-    const coverWidth = canvas.width / 2;
-    const coverHeight = 50;
-
-    function drawCover() {
-      ctx.fillStyle = "green";
-      ctx.fillRect(coverX, coverY, coverWidth, coverHeight);
-    }
-
     function drawPlayer() {
       if (player.alive) {
         ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
       }
     }
+
     function drawEnemies() {
       for (let enemy of enemies) {
         ctx.drawImage(enemyImg, enemy.x, enemy.y, enemy.width, enemy.height);
       }
     }
+
     // Game Loop
     let score = 0; // 计分器
 
@@ -188,8 +175,6 @@
         if (enemy.y > canvas.height) {
           enemies.splice(enemies.indexOf(enemy), 1);
         } else {
-          
-      
           // 敌人射击
           enemy.shootTimer--;
           if (enemy.shootTimer <= 0) {
@@ -244,8 +229,15 @@
           bullet.y > coverY &&
           bullet.y < coverY + coverHeight
         ) {
-          // 蓝色子弹击中了掩体，消失
+          // 蓝色子弹击中了掩体
           enemyBullets.splice(enemyBullets.indexOf(bullet), 1);
+          coverHits++;
+          if (coverHits >= 10) {
+            coverColor = "red"; // 改变掩体颜色为红色
+          }
+          if (coverHits >= 25) {
+             coverHeight = 0; // 掩体消失
+          }
           break;
         }
       }
@@ -281,6 +273,18 @@
       }
 
       requestAnimationFrame(gameLoop);
+    }
+
+    function spawnEnemy() {
+      let enemy = {
+        x: Math.random() * (canvas.width - enemySize),
+        y: -enemySize,
+        width: enemySize,
+        height: enemySize,
+        speed: enemySpeed,
+        shootTimer: Math.floor(Math.random() * 100) + 50 // 每个敌人的射击计时器
+      };
+      enemies.push(enemy);
     }
 
     gameLoop();
