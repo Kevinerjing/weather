@@ -75,10 +75,10 @@
     });
 
     function handleInput() {
-      if (keys["ArrowLeft"] && player.x > 0) {
+      if (keys["a"] && player.x > 0) {
         player.x -= player.speed;
       }
-      if (keys["ArrowRight"] && player.x < canvas.width - player.width) {
+      if (keys["d"] && player.x < canvas.width - player.width) {
         player.x += player.speed;
       }
       if (keys[" "] || keys["Space"]) {
