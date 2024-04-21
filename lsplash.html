@@ -48,15 +48,30 @@
     let coverHits = 0; // 记录掩体被击中的次数
     let coverColor = "green"; // 控制掩体颜色
 
-    function drawCover() {
-      ctx.fillStyle = coverColor;
-      ctx.fillRect(coverX, coverY, coverWidth, coverHeight);
+    // Power-up
+    let powerUp = {
+      x: 0,
+      y: 0,
+      width: 30,
+      height: 60,
+      active: false // Indicates whether the power-up is active or not
+    };
+
+    const powerUpImg = new Image();
+    powerUpImg.src = 'powerup.png';
+
+    function drawPowerUp() {
+      if (powerUp.active) {
+        ctx.drawImage(powerUpImg, powerUp.x, powerUp.y, powerUp.width, powerUp.height);
+      }
     }
 
-    // Load player and enemy images
+    // Load player, enemy, and power-up images
     playerImg.onload = function() {
       enemyImg.onload = function() {
-        gameLoop();
+        powerUpImg.onload = function() {
+          gameLoop();
+        };
       };
     };
 
@@ -77,6 +92,12 @@
       if (keys["d"] && player.x < canvas.width - player.width) {
         player.x += player.speed;
       }
+      if (keys["w"] && player.y > 0) { // Move up
+        player.y -= player.speed;
+      }
+      if (keys["s"] && player.y < canvas.height - player.height) { // Move down
+        player.y += player.speed;
+      }
       if (keys[" "] || keys["Space"]) {
         shoot();
       }
@@ -88,14 +109,17 @@
     const bulletSize = 5;
 
     function shoot() {
-      let bullet = {
-        x: player.x + player.width / 2 - bulletSize / 2,
-        y: player.y,
-        width: bulletSize,
-        height: bulletSize,
-        speed: bulletSpeed
-      };
-      bullets.push(bullet);
+      let bulletCount = powerUp.active ? 3 : 1; // Adjust bullet count based on power-up
+      for (let i = 0; i < bulletCount; i++) {
+        let bullet = {
+          x: player.x + player.width / 2 - bulletSize / 2 + (i - 1) * 10, // Spread pattern
+          y: player.y,
+          width: bulletSize,
+          height: bulletSize,
+          speed: bulletSpeed
+        };
+        bullets.push(bullet);
+      }
     }
 
     function updateBullets() {
@@ -150,6 +174,11 @@
       }
     }
 
+    function drawCover() {
+      ctx.fillStyle = coverColor;
+      ctx.fillRect(coverX, coverY, coverWidth, coverHeight);
+    }
+
     // Game Loop
     let score = 0; // 计分器
     let coverVisible = true; // 是否显示掩体
@@ -165,17 +194,22 @@
       drawEnemies();
       drawPlayer();
       drawCover();
-  if (!coverVisible && score >= previousScore + 5) {
-    coverHeight = 50; // 恢复掩体高度
-    coverColor = "green";
-    coverVisible = true; // 设置掩体可见
-  }
+      drawPowerUp(); // Draw power-up
 
-
+      if (!coverVisible && score >= previousScore + 5) {
+        coverHeight = 50; // 恢复掩体高度
+        coverColor = "green";
+        coverVisible = true; // 设置掩体可见
+      }
 
       // 敌人生成和移动
       if (Math.random() < 1 / enemySpawnRate) {
         spawnEnemy();
+      }
+
+      // Power-up spawning logic
+      if (Math.random() < 1 / 500) { // Adjust spawn rate as needed
+        spawnPowerUp();
       }
 
       for (let enemy of enemies) {
@@ -244,11 +278,11 @@
             coverColor = "red"; // 改变掩体颜色为红色
           }
           if (coverHits >= 15) {
-             coverHeight = 0; // 掩体消失
-                          coverVisible = false;
-  // 更新上一个得分
-  previousScore = score;
-coverHits =0;
+            coverHeight = 0; // 掩体消失
+            coverVisible = false;
+            // 更新上一个得分
+            previousScore = score;
+            coverHits = 0;
           }
           break;
         }
@@ -272,8 +306,8 @@ coverHits =0;
         }
       }
 
-  
-
+      // 检查玩家是否与power-up碰撞
+      checkPowerUpCollision();
 
       // 显示分数
       ctx.fillStyle = "black";
@@ -302,7 +336,29 @@ coverHits =0;
       enemies.push(enemy);
     }
 
- gameLoop();
+    function spawnPowerUp() {
+      powerUp.x = Math.random() * (canvas.width - powerUp.width);
+      powerUp.y = Math.random() * (canvas.height - powerUp.height);
+    }
+
+    function checkPowerUpCollision() {
+      if (
+        !powerUp.active &&
+        player.x < powerUp.x + powerUp.width &&
+        player.x + player.width > powerUp.x &&
+        player.y < powerUp.y + powerUp.height &&
+        player.y + player.height > powerUp.y
+      ) {
+        // Player collects the power-up
+        powerUp.active = true;
+        // Set a timer for the power-up duration (e.g., 10 seconds)
+        setTimeout(() => {
+          powerUp.active = false;
+        }, 10000); // 10 seconds in milliseconds
+      }
+    }
+
+    gameLoop();
   </script>
 </body>
 </html>
