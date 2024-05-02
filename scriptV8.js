@@ -22,7 +22,7 @@ fetch("https://www.ecowitt.net/index/home", {
   const rainRate = (data.data.rain.data.rainratein.value * 25.4).toFixed(1);
   const uvIndex = data.data.so_uv.data.uv.value;
   const baromrelin = data.data.pressure.data.baromrelin.value;
-  const baromrelin  = (baromrelin * 33.86).toFixed(1); 
+  const pressure  = (baromrelin * 33.86).toFixed(1); 
 
 
   // Change background picture based on weather data
@@ -135,7 +135,7 @@ weatherstationElement.innerHTML = `
     <p>Wind Speed: ${windSpeedKmh} km/hr</p>
     <p>Rain Rate: ${rainRate} mm/hr</p>
     <p>UV Index: ${uvIndex}</p>
-    <p>Pressure: ${baromrelin}</p>
+    <p>Pressure: ${pressure}</p>
     </div>
   `;
 })
