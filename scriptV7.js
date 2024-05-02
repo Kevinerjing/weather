@@ -21,11 +21,19 @@ fetch("https://www.ecowitt.net/index/home", {
   const windSpeedKmh = (windSpeedMph * 1.60934).toFixed(1); 
   const rainRate = (data.data.rain.data.rainratein.value * 25.4).toFixed(1);
   const uvIndex = data.data.so_uv.data.uv.value;
+  const baromrelin = data.data.pressure.data.baromrelin.value;
+  const baromrelin  = (baromrelin * 33.86).toFixed(1); 
+
 
   // Change background picture based on weather data
   // rainy day
   if (rainRate > 0 && uvIndex < 5) {
         document.body.style.backgroundImage = 'url("rainy_background_v1.png")';
+
+weatherstationElement.innerHTML = `
+<img src="MyWeatherStation_rain.jpg" alt="weather station" width="400" height="350">
+  `;
+
  suggestionDataElement.innerHTML = `
       <h1>Weather Suggestions</h1>
     <div>
@@ -127,6 +135,7 @@ weatherstationElement.innerHTML = `
     <p>Wind Speed: ${windSpeedKmh} km/hr</p>
     <p>Rain Rate: ${rainRate} mm/hr</p>
     <p>UV Index: ${uvIndex}</p>
+    <p>Pressure: ${baromrelin}</p>
     </div>
   `;
 })
