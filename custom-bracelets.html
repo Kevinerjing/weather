@@ -18,7 +18,7 @@
       width: 40%;
     }
 .design-area.light {
-  background-image: url('woodtray-light.png');
+  background-image: url('crystaltray-light.PNG');
   background-size: 420px 420px;
   background-position: 8px 24px;
 }
@@ -146,7 +146,7 @@
 <audio id="background-audio" src="intheforest.mp3" loop></audio>
 
 
-  <div class="design-area dark" id="design-area" ondragover="event.preventDefault()" ondrop="drop(event)">
+  <div class="design-area light" id="design-area" ondragover="event.preventDefault()" ondrop="drop(event)">
     <!--<div id="center-thread"></div>-->
   </div>
 
@@ -277,7 +277,7 @@ function updatePriceDisplay() {
     createImageBead("maple-pendant--tocentre.png", "large", "round", 8.0);
     createImageBead("goldwhitebead-tocentre.png", "large", "round", 8.0);
     createImageBead("goldcircle-tocentre.png", "large", "round", 8.0);
-    createImageBead("heart-pendant-tocentre.png", "large", "round", 10.2);
+    createImageBead("red-heart-pendant-tocentre.png", "large", "round", 10.2);
     function addBead(color, size, shape) {
   if (getFilledBeadCount() >= beadCount) {
     alert("Maximum number of beads reached.");
