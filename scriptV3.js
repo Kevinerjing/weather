@@ -17,12 +17,13 @@ fetch("https://www.ecowitt.net/index/home", {
   const outdoorTempFahrenheit = data.data.temp.data.tempf.value;
   const outdoorTempCelsius = ((outdoorTempFahrenheit - 32) * (5 / 9)).toFixed(1);
   const humidity = data.data.temp.data.humidity.value;
-  const windSpeedMph = data.data.wind.data.windspeedmph.value;
-  const windSpeedKmh = (windSpeedMph * 1.60934).toFixed(1); 
+  let windSpeedMph = data.data.wind.data.windspeedmph.value;
+  windSpeedKmh = (windSpeedMph * 1.60934).toFixed(1); 
   const rainRate = (data.data.rain.data.rainratein.value * 25.4).toFixed(1);
   const uvIndex = data.data.so_uv.data.uv.value;
-  const baromrelin = data.data.pressure.data.baromrelin.value;
-  const baromrelin  = (baromrelin * 33.86).toFixed(1); 
+  let baromrelin = data.data.pressure.data.baromrelin.value;
+  baromrelin  = (baromrelin * 33.86).toFixed(1); 
+
 
 
   // Change background picture based on weather data
