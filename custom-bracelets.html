@@ -1258,9 +1258,8 @@
     function clearDesignArea() {
       const designArea = document.getElementById("design-area");
 
-      while (designArea.firstChild) {
-        designArea.removeChild(designArea.firstChild);
-      }
+      const beads = designArea.querySelectorAll(".bead-in-design");
+      beads.forEach(bead => bead.remove());
 
       beadPositions = Array(beadCount).fill(null);
       beadCart = {};
