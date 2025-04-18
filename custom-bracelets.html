@@ -265,12 +265,14 @@
 
       .design-area.light {
         background-image: url("crystaltray-light.PNG");
+        background-repeat: no-repeat;
       }
       #price-toggle-handle:hover {
         background: #666;
       }
       .design-area.dark {
         background-image: url("jadetray.png");
+        background-repeat: no-repeat;
       }
       #tray-bg {
         transition: opacity 0.5s ease;
@@ -375,7 +377,7 @@
         height: 420px;
 
         background-size: 450px 450px;
-        background-position: 8px 24px;
+        background-position: center;
         border-radius: 10px;
 
         overflow: hidden;
@@ -491,6 +493,15 @@
         >
           <i class="fa-solid fa-camera"></i>
         </button>
+        <button
+  id="record-btn"
+  style="font-size: 20px; padding: 10px; border-radius: 8px"
+  title="Start/Stop Recording"
+  data-recording="false"
+>
+  <i class="fa-solid fa-circle-dot"></i>
+</button>
+<a id="download-link" style="display: none"></a>
       </div>
       <div
         id="zoom-wrapper"
@@ -750,11 +761,95 @@
       });
     </script>
 
+
+<script>
+  let mediaRecorder, recordedChunks = [], recordingCanvas, canvasCtx, intervalId;
+  const targetElement = document.getElementById("design-area");
+  const recordBtn = document.getElementById("record-btn");
+  const downloadLink = document.getElementById("download-link");
+
+  const originalBgPos = targetElement.style.backgroundPosition;
+  targetElement.style.backgroundPosition = "center";
+
+  recordBtn.addEventListener("click", async () => {
+    if (recordBtn.dataset.recording === "true") {
+
+      clearInterval(intervalId);
+      mediaRecorder.stop();
+      recordBtn.innerHTML = '<i class="fa-solid fa-circle-dot"></i>';
+      recordBtn.dataset.recording = "false";
+      return;
+    }
+
+
+    const rect = targetElement.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+
+    recordingCanvas = document.createElement("canvas");
+    recordingCanvas.width = width;
+    recordingCanvas.height = height;
+    canvasCtx = recordingCanvas.getContext("2d");
+
+
+    const stream = recordingCanvas.captureStream(10); // 10fps
+    recordedChunks = [];
+
+    mediaRecorder = new MediaRecorder(stream, {
+      mimeType: "video/webm",
+    });
+
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data.size > 0) recordedChunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(recordedChunks, { type: "video/webm" });
+      const url = URL.createObjectURL(blob);
+      downloadLink.href = url;
+      downloadLink.download = "bracelet-recording.webm";
+      downloadLink.click();
+    };
+
+    const originalTransform = targetElement.style.transform;
+    const originalTransformOrigin = targetElement.style.transformOrigin;
+    targetElement.style.transform = "none";
+    targetElement.style.transformOrigin = "top left";
+ 
+    intervalId = setInterval(async () => {
+      const canvasImage = await html2canvas(targetElement, {
+        useCORS: true,
+        backgroundColor: null,
+        scale: 1,
+      });
+
+      canvasCtx.clearRect(0, 0, width, height);
+      canvasCtx.drawImage(canvasImage, 0, 0, width, height);
+    }, 100);
+
+
+
+    mediaRecorder.start();
+    recordBtn.innerHTML = '<i class="fa-solid fa-square"></i>';
+    recordBtn.dataset.recording = "true";
+
+    setTimeout(() => {
+      targetElement.style.backgroundPosition = originalBgPos;
+    }, 200);
+
+  });
+</script>
+
+
+
+
     <script>
       document.body.style.backgroundColor = "#f9f9f9";
       document.getElementById("light-overlay").style.display = "none";
       document.getElementById("light-controls").style.display = "none";
       document.getElementById("mode-toggle-checkbox").checked = false;
+      
       const modeCheckbox = document.getElementById("mode-toggle-checkbox");
 const sunIcon = document.getElementById("sun-icon");
 const moonIcon = document.getElementById("moon-icon");
@@ -817,7 +912,7 @@ const moonIcon = document.getElementById("moon-icon");
       document
         .getElementById("screenshot-btn")
         .addEventListener("click", () => {
-          const target = document.getElementById("zoom-wrapper");
+          const target = document.getElementById("design-area");
           const clone = target.cloneNode(true);
           clone.style.transform = "scale(1)";
           clone.style.transformOrigin = "top center";
@@ -868,7 +963,7 @@ const moonIcon = document.getElementById("moon-icon");
         document.getElementById("music-gif").style.opacity = 1;
       }
 
-      let zoomLevel = 1.3;
+      let zoomLevel = 1;
       const wrapper = document.getElementById("zoom-wrapper");
       wrapper.style.transform = `scale(${zoomLevel})`;
 
@@ -1060,8 +1155,8 @@ const moonIcon = document.getElementById("moon-icon");
 
       function addToDesignArea(styleObj, size, shape, imageURL = "") {
         let designArea = document.getElementById("design-area");
-        let centerX = designArea.clientWidth / 2;
-        let centerY = designArea.clientHeight / 2;
+        let centerX = designArea.clientWidth / 2 - 5;
+        let centerY = designArea.clientHeight / 2 - 12;
         let radius = 114;
         let beadWidth = size === "small" ? 30 : 50;
         let beadHeight = beadWidth;
