@@ -1,126 +1,296 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to My Ecowitt Weather Station</title>
+  <title data-en="Lightning Alert for Kanata Lakes" data-zh="Kanata Lakes 社区雷电预警">Kanata Lakes 社区雷电预警</title>
   <style>
-    body {
-      background-color: #ffffff;
-      color: #ffffff;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-    }
-
-
-
-    body.dark-mode {
-      background-color: #333333;
-      color: #ffffff;
-    }
-
-    .container {
-      display: flex;
-      overflow-x: hidden; 
-
-    }
-
-    .page {
-      flex: 0 0 100%;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-    }
-
-
-
-
-    h1 h2 {
-      color: #333333;
-      text-align: center;
-      padding-top: 20px;
-    }
-
-    .button {
-      display: block;
-      margin: 20px auto;
-      padding: 10px 20px;
-      background-color: #008cba;
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-      background-color: #005f75;
-    }
-
-
-    .dots {
-      text-align: center;
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-    }
-
-    .dot {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      background-color: #cccccc;
-      border-radius: 50%;
-      margin: 0 5px;
-      cursor: pointer;
-    }
-
-    .content-container {
-      text-align: center;
-    }
-
-    .dot.active {
-      background-color: #008cba;
-    }
+    body {font-family: Arial, sans-serif; margin:0; background:#f9f9f9; color:#333; line-height:1.6;}
+    header {background:linear-gradient(135deg,#004aad,#007bff); color:white; text-align:center; padding:2rem 1rem;}
+    header h1 {font-size:2.5rem; margin-bottom:0.5rem;}
+    header p {font-size:1.2rem; font-style:italic;}
+    .lang-btn {margin-top:1rem;}
+    .lang-btn button {padding:6px 12px; margin:0 5px; border:none; border-radius:4px; cursor:pointer; background:#ff9800; color:white; font-weight:bold;}
+    section {max-width:900px; margin:2rem auto; padding:0 1rem;}
+    section h2 {color:#004aad; margin-bottom:0.5rem;}
+    .card {background:white; padding:1.5rem; border-radius:8px; margin-bottom:1.5rem; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+    table {width:100%; border-collapse:collapse; margin-top:1rem;}
+    table th, table td {padding:8px;}
+    table thead {background:#004aad; color:white;}
+    table tfoot {background:#e6f0ff; font-weight:bold;}
+    .donate-btn {display:inline-block; padding:0.8rem 1.5rem; background:#ff9800; color:white; text-decoration:none; border-radius:5px; font-weight:bold; margin-top:1rem;}
+    footer {background:#004aad; color:white; text-align:center; padding:1rem; margin-top:2rem;}
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="page content-container" id="weather-data"></div>
-    <div class="page" id="suggestions-data"></div>
-    <div class="page"><h1>Weather Station</h1>
-    <div id="weather-station">
-    
+  <!-- 1. Banner -->
+  <header>
+    <h1 data-en="⚡ Lightning Alert for Kanata Lakes" data-zh="⚡ Kanata Lakes 社区雷电预警">⚡ Kanata Lakes 社区雷电预警</h1>
+    <p data-en="Keeping our community safe, one lightning alert at a time" data-zh="用每一次雷电提醒守护社区安全">用每一次雷电提醒守护社区安全</p>
+    <div class="lang-btn">
+      <button onclick="setLanguage('zh')">Chinese</button>
+      <button onclick="setLanguage('en')">English</button>
     </div>
+  </header>
+
+  <!-- 2. Mission -->
+  <section>
+    <div class="card">
+      <h2 data-en="Our Mission" data-zh="我们的使命">我们的使命</h2>
+      <p data-en="We are Kevin and Eric, two students from Kanata who love science and technology. Our project brings fast, local lightning alerts to our neighbors, schools, and sports clubs to help everyone stay safe during thunderstorms."
+         data-zh="我们是 Kevin 和 Eric，两名来自 Kanata 的学生，热爱科学与技术。我们的项目为社区、学校和运动俱乐部提供快速、本地化的雷电预警，帮助大家在雷暴天气中保持安全。">
+         我们是 Kevin 和 Eric，两名来自 Kanata 的学生，热爱科学与技术。我们的项目为社区、学校和运动俱乐部提供快速、本地化的雷电预警，帮助大家在雷暴天气中保持安全。
+      </p>
+    </div>
+  </section>
+
+  <!-- 3. Why It Matters -->
+  <section>
+    <div class="card">
+      <h2 data-en="Why It Matters" data-zh="为什么重要">为什么重要</h2>
+      <ul>
+        <li data-en="Official apps like WeatherCAN are accurate, but may be delayed by 1–2 minutes." data-zh="官方应用（如 WeatherCAN）虽然准确，但可能延迟 1–2 分钟。">官方应用（如 WeatherCAN）虽然准确，但可能延迟 1–2 分钟。</li>
+        <li data-en="For outdoor activities like golf, tennis, or soccer, even 30 seconds can make a difference." data-zh="对于高尔夫、网球、足球等户外活动，即使 30 秒的延迟也可能造成危险。">对于高尔夫、网球、足球等户外活动，即使 30 秒的延迟也可能造成危险。</li>
+        <li data-en="Our system detects lightning within seconds and shares alerts instantly." data-zh="我们的系统可以在数秒内检测到雷电并立即推送提醒。">我们的系统可以在数秒内检测到雷电并立即推送提醒。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. How It Works -->
+  <section>
+    <div class="card">
+      <h2 data-en="How It Works" data-zh="工作原理">工作原理</h2>
+      <ol>
+        <li data-en="A lightning sensor detects strikes within a few kilometers." data-zh="雷电传感器探测到几公里范围内的闪电。">雷电传感器探测到几公里范围内的闪电。</li>
+        <li data-en="Our receiver decodes the data and sends it to our server." data-zh="接收器解码数据并传输到服务器。">接收器解码数据并传输到服务器。</li>
+        <li data-en="The server shares alerts through this website and our app." data-zh="服务器通过网站和手机应用发布预警。">服务器通过网站和手机应用发布预警。</li>
+        <li data-en="Community members receive instant notifications to stay safe." data-zh="社区成员收到即时通知，确保安全。">社区成员收到即时通知，确保安全。</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 5. STEM Knowledge -->
+  <section>
+    <div class="card">
+      <h2 data-en="STEM Knowledge We Use" data-zh="我们学习的 STEM 知识">我们学习的 STEM 知识</h2>
+      <ul>
+        <li data-en="Wireless (Radio): 433 MHz signals, SDR, electromagnetic pulses." data-zh="无线电：433 MHz 信号、软件无线电、雷电电磁脉冲。">无线电：433 MHz 信号、软件无线电、雷电电磁脉冲。</li>
+        <li data-en="IT: MQTT publish/subscribe, cloud servers, real-time notifications, app development." data-zh="信息技术：MQTT 发布/订阅、云服务器、实时推送、应用开发。">信息技术：MQTT 发布/订阅、云服务器、实时推送、应用开发。</li>
+        <li data-en="Weather Science: thunderstorms, EMP pulses, 30/30 rule." data-zh="天气科学：雷暴、EMP 脉冲、30/30 规则。">天气科学：雷暴、EMP 脉冲、30/30 规则。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. Materials & Budget -->
+  <section>
+    <div class="card">
+      <h2 data-en="Materials & Budget" data-zh="材料与预算">材料与预算</h2>
+      <table>
+        <thead>
+          <tr>
+            <th data-en="Item" data-zh="项目">项目</th>
+            <th data-en="Cost" data-zh="费用">费用</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-en="Lightning Sensor" data-zh="雷电传感器">雷电传感器</td><td>$62.70</td></tr>
+          <tr><td data-en="RTL-SDR USB Receiver (433 MHz)" data-zh="RTL-SDR USB 接收器 (433 MHz)">RTL-SDR USB 接收器 (433 MHz)</td><td>$65.95</td></tr>
+          <tr><td data-en="Raspberry Pi or small PC" data-zh="Raspberry Pi 或小型电脑">Raspberry Pi 或小型电脑</td><td>$143.00</td></tr>
+          <tr><td data-en="Apple Developer Program (1 year)" data-zh="Apple 开发者账号 (1 年)">Apple 开发者账号 (1 年)</td><td>$99.00</td></tr>
+          <tr><td data-en="MQTT Server (Cloud VM)" data-zh="MQTT 云服务器">MQTT 云服务器</td><td>$10/月</td></tr>
+          <tr><td data-en="Website Hosting (GitHub Pages / Netlify)" data-zh="网站托管 (GitHub Pages / Netlify)">网站托管 (GitHub Pages / Netlify)</td><td>免费</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td data-en="Total Initial Cost" data-zh="总初始成本">总初始成本</td><td>≈ $370</td></tr>
+        </tfoot>
+      </table>
+      <p data-en="Ongoing cost: about $10 per month." data-zh="持续成本：大约 $10/月。">持续成本：大约 $10/月。</p>
+    </div>
+  </section>
+
+<!-- 7. Project Roadmap Timeline -->
+<section>
+  <div class="card">
+    <h2 data-en="Project Roadmap" data-zh="项目计划时间轴">项目计划时间轴</h2>
+    <div class="timeline">
+
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h3 data-en="Phase 1: Prototype (Week 1–2)" data-zh="阶段 1：原型 (第1–2周)">阶段 1：原型 (第1–2周)</h3>
+          <p data-en="Buy hardware (sensor, SDR, Raspberry Pi), test signal decoding, validate detection accuracy."
+             data-zh="购买硬件（传感器、SDR、树莓派），测试信号解码，验证探测准确性。">
+             购买硬件（传感器、SDR、树莓派），测试信号解码，验证探测准确性。
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <h3 data-en="Phase 2: Infrastructure (Week 2–3)" data-zh="阶段 2：基础设施 (第2–3周)">阶段 2：基础设施 (第2–3周)</h3>
+          <p data-en="Set up cloud VM, install MQTT broker, connect Pi to broker, build basic data logging."
+             data-zh="搭建云服务器，安装 MQTT broker，连接树莓派，建立基础数据记录。">
+             搭建云服务器，安装 MQTT broker，连接树莓派，建立基础数据记录。
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h3 data-en="Phase 3: Website (Week 3–4)" data-zh="阶段 3：网站 (第3–4周)">阶段 3：网站 (第3–4周)</h3>
+          <p data-en="Launch project website with mission, budget, STEM knowledge, and donation page."
+             data-zh="上线项目网站，展示使命、预算、STEM 知识，并开放捐赠。">
+             上线项目网站，展示使命、预算、STEM 知识，并开放捐赠。
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <h3 data-en="Phase 4: App Development (Week 4–5)" data-zh="阶段 4：应用开发 (第4–5周)">阶段 4：应用开发 (第4–5周)</h3>
+          <p data-en="Apply for Apple Developer account, set up Xcode, build iOS app prototype with notifications."
+             data-zh="申请 Apple 开发者账号，配置 Xcode，开发带通知功能的 iOS 应用原型。">
+             申请 Apple 开发者账号，配置 Xcode，开发带通知功能的 iOS 应用原型。
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h3 data-en="Phase 5: Improvements (Week 5–6)" data-zh="阶段 5：改进 (第5–6周)">阶段 5：改进 (第5–6周)</h3>
+          <p data-en="Add map visualization, secure server, refine distance-based alerts, collect user feedback."
+             data-zh="增加地图可视化，提升服务器安全，优化基于距离的提醒，收集用户反馈。">
+             增加地图可视化，提升服务器安全，优化基于距离的提醒，收集用户反馈。
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <h3 data-en="Phase 6: Community Launch (Week 7+)" data-zh="阶段 6：社区发布 (第7周+)">阶段 6：社区发布 (第7周+)</h3>
+          <p data-en="Publish app to App Store, organize Community Science Talk sessions, help neighbors install and use the app."
+             data-zh="发布应用到 App Store，组织社区科普讲座，帮助邻居安装和使用应用。">
+             发布应用到 App Store，组织社区科普讲座，帮助邻居安装和使用应用。
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h3 data-en="Phase 7: Expansion" data-zh="阶段 7：扩展">阶段 7：扩展</h3>
+          <p data-en="Add more sensors across Kanata, recruit student teams, explore Android version."
+             data-zh="在 Kanata 增加更多传感器，招募学生团队，探索 Android 版本。">
+             在 Kanata 增加更多传感器，招募学生团队，探索 Android 版本。
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
-  <div class="dots">
-    <span class="dot" onclick="scrollToPage(0)"></span>
-    <span class="dot" onclick="scrollToPage(1)"></span>
-    <span class="dot" onclick="scrollToPage(2)"></span>
-  </div>
-  <script src="scriptV3.js"></script>
+</section>
+
+<!-- CSS for Timeline -->
+<style>
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 1rem auto;
+}
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  background: #004aad;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -2px;
+}
+.timeline-item {
+  padding: 1rem 1rem;
+  position: relative;
+  width: 48%;
+}
+.timeline-item.left {
+  left: 0;
+}
+.timeline-item.right {
+  left: 50%;
+}
+.timeline-item::before {
+  content: "⚡";
+  position: absolute;
+  top: 15px;
+  right: -14px;
+  background: #004aad;
+  color: white;
+  font-size: 0.8rem;
+  padding: 6px;
+  border-radius: 50%;
+  z-index: 1;
+}
+.timeline-item.right::before {
+  left: -14px;
+  right: auto;
+}
+.timeline-content {
+  padding: 1rem;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.timeline-content h3 {
+  margin-top: 0;
+  color: #004aad;
+}
+@media screen and (max-width: 768px) {
+  .timeline::after {
+    left: 20px;
+  }
+  .timeline-item {
+    width: 100%;
+    left: 0;
+    padding-left: 40px;
+    margin-bottom: 2rem;
+  }
+  .timeline-item.right {
+    left: 0;
+  }
+  .timeline-item::before {
+    left: 0;
+    right: auto;
+  }
+}
+</style>
+
+
+  <!-- 8. Support -->
+  <section>
+    <div class="card">
+      <h2 data-en="Support Our Project" data-zh="支持我们的项目">支持我们的项目</h2>
+      <p data-en="Donations will help us buy more sensors, maintain our server, and expand coverage. Every contribution makes a difference!"
+         data-zh="捐赠将帮助我们购买更多传感器、维护服务器，并扩大覆盖范围。每一份支持都很重要！">
+         捐赠将帮助我们购买更多传感器、维护服务器，并扩大覆盖范围。每一份支持都很重要！
+      </p>
+      <a href="https://www.paypal.com/donate" target="_blank" class="donate-btn" data-en="Donate Now" data-zh="立即捐赠">立即捐赠</a>
+    </div>
+  </section>
+
+  <!-- 9. Footer -->
+  <footer>
+    <p data-en="© 2025 Lightning Alert Project - Built by Kevin & Eric, with community support."
+       data-zh="© 2025 雷电预警项目 - 由 Kevin & Eric 发起，感谢社区支持。">© 2025 雷电预警项目 - 由 Kevin & Eric 发起，感谢社区支持。</p>
+  </footer>
+
+  <!-- Language Switch Script -->
   <script>
-    function scrollToPage(pageIndex) {
-      const pages = document.querySelectorAll('.page');
-      const dot = document.querySelectorAll('.dot');
-      pages[pageIndex].scrollIntoView({ behavior: 'smooth' });
-      dot.forEach((dot, index) => {
-        if (index === pageIndex) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
+    function setLanguage(lang) {
+      document.querySelectorAll("[data-en]").forEach(el => {
+        el.innerText = el.getAttribute("data-" + lang);
       });
+      document.title = document.querySelector("title").getAttribute("data-" + lang);
     }
   </script>
 
-  <script>
-    setInterval(function() {
-      location.reload();
-    }, 20000);
-  </script>
 </body>
 </html>
