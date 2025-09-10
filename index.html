@@ -21,7 +21,93 @@
     .donate-btn {display:inline-block; padding:0.8rem 1.5rem; background:#ff9800; color:white; text-decoration:none; border-radius:5px; font-weight:bold; margin-top:1rem;}
     footer {background:#004aad; color:white; text-align:center; padding:1rem; margin-top:2rem;}
   </style>
+
+  <!-- CSS for Timeline -->
+<style>
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 1rem auto;
+}
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  background: #004aad;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -2px;
+}
+.timeline-item {
+  padding: 1rem 1rem;
+  position: relative;
+  width: 48%;
+}
+.timeline-item.left {
+  left: 0;
+}
+.timeline-item.right {
+  left: 50%;
+}
+.timeline-item::before {
+  content: "⚡";
+  position: absolute;
+  top: 15px;
+  right: -14px;
+  background: #004aad;
+  color: white;
+  font-size: 0.8rem;
+  padding: 6px;
+  border-radius: 50%;
+  z-index: 1;
+}
+.timeline-item.right::before {
+  left: -14px;
+  right: auto;
+}
+.timeline-content {
+  padding: 1rem;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.timeline-content h3 {
+  margin-top: 0;
+  color: #004aad;
+}
+@media screen and (max-width: 768px) {
+  .timeline::after {
+    left: 20px;
+  }
+  .timeline-item {
+    width: 100%;
+    left: 0;
+    padding-left: 40px;
+    margin-bottom: 2rem;
+  }
+  .timeline-item.right {
+    left: 0;
+  }
+  .timeline-item::before {
+    left: 0;
+    right: auto;
+  }
+}
+</style>
 </head>
+<!-- Language Switch Script -->
+<script>
+    function setLanguage(lang) {
+      document.querySelectorAll("[data-en]").forEach(el => {
+        el.innerText = el.getAttribute("data-" + lang);
+      });
+      document.title = document.querySelector("title").getAttribute("data-" + lang);
+    }
+  window.onload = function() {
+    setLanguage('en');
+  }
+</script>
 <body>
 
   <!-- 1. Banner -->
@@ -109,8 +195,8 @@
     </div>
   </section>
 
-<!-- App Preview Section -->
-<section>
+  <!-- 7. App Preview Section -->
+  <section>
   <div class="card" style="text-align:center;">
     <h2 data-en="App Preview" data-zh="应用预览">App Preview</h2>
     <p data-en="See how our Lightning Alert App works on iPhone."
@@ -138,11 +224,11 @@
       -->
     </div>
   </div>
-</section>
+  </section>
 
 
-<!-- 7. Project Roadmap Timeline -->
-<section>
+  <!-- 8. Project Roadmap Timeline -->
+  <section>
   <div class="card">
     <h2 data-en="Project Roadmap" data-zh="项目计划时间轴">项目计划时间轴</h2>
     <div class="timeline">
@@ -219,84 +305,10 @@
 
     </div>
   </div>
-</section>
+  </section>
 
-<!-- CSS for Timeline -->
-<style>
-.timeline {
-  position: relative;
-  max-width: 800px;
-  margin: 1rem auto;
-}
-.timeline::after {
-  content: '';
-  position: absolute;
-  width: 4px;
-  background: #004aad;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  margin-left: -2px;
-}
-.timeline-item {
-  padding: 1rem 1rem;
-  position: relative;
-  width: 48%;
-}
-.timeline-item.left {
-  left: 0;
-}
-.timeline-item.right {
-  left: 50%;
-}
-.timeline-item::before {
-  content: "⚡";
-  position: absolute;
-  top: 15px;
-  right: -14px;
-  background: #004aad;
-  color: white;
-  font-size: 0.8rem;
-  padding: 6px;
-  border-radius: 50%;
-  z-index: 1;
-}
-.timeline-item.right::before {
-  left: -14px;
-  right: auto;
-}
-.timeline-content {
-  padding: 1rem;
-  background: white;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.timeline-content h3 {
-  margin-top: 0;
-  color: #004aad;
-}
-@media screen and (max-width: 768px) {
-  .timeline::after {
-    left: 20px;
-  }
-  .timeline-item {
-    width: 100%;
-    left: 0;
-    padding-left: 40px;
-    margin-bottom: 2rem;
-  }
-  .timeline-item.right {
-    left: 0;
-  }
-  .timeline-item::before {
-    left: 0;
-    right: auto;
-  }
-}
-</style>
-
-<!-- Contact Us -->
-<section>
+  <!-- 9. Contact Us -->
+  <section>
   <div class="card">
     <h2 data-en="Contact Us" data-zh="联系我们">Contact Us</h2>
     <p data-en="We’d love to hear from you! Whether you are from ECCC, a teacher, a parent, or a community member, feel free to reach out."
@@ -316,10 +328,10 @@
        We are based in Kanata Lakes, Ottawa, and happy to collaborate with organizations that care about community safety and weather awareness.
     </p>
   </div>
-</section>
+  </section>
 
-<!-- Safety Context -->
-<section>
+  <!-- 10. Safety Context -->
+  <section>
   <div class="card">
     <h2 data-en="Lightning in Canada" data-zh="加拿大的雷电风险">
       Lightning in Canada
@@ -367,9 +379,9 @@
        This shows why community-level, second-fast lightning alerts are important: even in a developed country like Canada, lightning still causes preventable deaths and injuries every year.
     </p>
   </div>
-</section>
+  </section>
 
-<section>
+  <section>
   <div class="card">
     <h2 data-en="Global Lightning Risks & Safety" data-zh="全球雷电风险与安全">
       Global Lightning Risks & Safety
@@ -415,10 +427,9 @@
       <li><span data-en="Buildings should have lightning rods and grounding systems, checked yearly." data-zh="建筑物应安装避雷针和接地系统，并进行年度检查。">Buildings should have lightning rods and grounding systems, checked yearly.</span></li>
     </ul>
   </div>
-</section>
+  </section>
 
-
-  <!-- 8. Support -->
+  <!-- 11. Support -->
   <section>
     <div class="card">
       <h2 data-en="Support Our Project" data-zh="支持我们的项目">支持我们的项目</h2>
@@ -431,24 +442,11 @@
     </div>
   </section>
 
-  <!-- 9. Footer -->
+  <!-- 12. Footer -->
   <footer>
     <p data-en="© 2025 Lightning Alert Project - Built by Kevin & Eric, with community support."
        data-zh="© 2025 雷电预警项目 - 由 Kevin & Eric 发起，感谢社区支持。">© 2025 雷电预警项目 - 由 Kevin & Eric 发起，感谢社区支持。</p>
   </footer>
-
-  <!-- Language Switch Script -->
-  <script>
-    function setLanguage(lang) {
-      document.querySelectorAll("[data-en]").forEach(el => {
-        el.innerText = el.getAttribute("data-" + lang);
-      });
-      document.title = document.querySelector("title").getAttribute("data-" + lang);
-    }
-  window.onload = function() {
-    setLanguage('en');
-  }
-  </script>
 
 </body>
 </html>
